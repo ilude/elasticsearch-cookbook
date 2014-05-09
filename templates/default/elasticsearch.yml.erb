@@ -1,0 +1,50 @@
+# -*- YAML -*-
+
+cluster:
+  name:  <%= @node[:elasticsearch][:cluster_name] %>
+
+path:
+  home:   <%= @node[:elasticsearch][:install_dir] %>
+  conf:   <%= @node[:elasticsearch][:config_dir] %>
+  logs:   <%= @node[:elasticsearch][:log_dir] %>
+  data:   <%= @node[:elasticsearch][:data_dir] %>
+  
+http:
+  enabled: <%= @node[:elasticsearch][:http][:enabled] %>
+  port: <%= @node[:elasticsearch][:http][:port] %>
+  max_content_length: <%= @node[:elasticsearch][:http][:max_content_length] %>
+
+# Discovery
+<% if @node[:elasticsearch][:discovery][:zen][:ping][:multicast][:enabled] %>
+discovery.zen.minimum_master_nodes: <%= @node[:elasticsearch][:discovery][:zen][:minimum_master_nodes] %>
+discovery.zen.ping.timeout: <%= @node[:elasticsearch][:discovery][:zen][:ping][:timeout] %>
+discovery.zen.ping.multicast.enabled: <%= @node[:elasticsearch][:discovery][:zen][:ping][:multicast][:enabled] %>
+discovery.zen.ping.multicast.group: <%= @node[:elasticsearch][:discovery][:zen][:ping][:multicast][:group] %>
+discovery.zen.ping.multicast.port: <%= @node[:elasticsearch][:discovery][:zen][:ping][:multicast][:port] %>
+discovery.zen.ping.multicast.ttl: <%= @node[:elasticsearch][:discovery][:zen][:ping][:multicast][:ttl] %>
+<% if @node[:elasticsearch][:discovery][:zen][:ping][:multicast][:address] %>
+discovery.zen.ping.multicast.address: <%= @node[:elasticsearch][:discovery][:zen][:ping][:multicast][:address] %>
+<% end %>
+
+<% elsif @node[:elasticsearch][:discovery][:zen][:ping][:unicast][:hosts] %>
+discovery.zen.ping.unicast.hosts: <%= @node[:elasticsearch][:discovery][:zen][:ping][:unicast][:hosts] %>
+<% end %>
+
+bootstrap:
+  # Set this property to true to lock the memory.
+  # You should also make sure that the ElasticSearch process is allowed to lock
+  # the memory, eg. by using `ulimit -l unlimited`.
+  mlockall: <%= @node[:elasticsearch][:bootstrap][:mlockall] %>
+
+<% if @node[:elasticsearch][:network][:host] %>
+network.host: <%= @node[:elasticsearch][:network][:host] %>
+<% else %>
+network:
+  bind_host: <%= @node[:elasticsearch][:network][:bind_host] %>
+  publish_host: <%= @node[:elasticsearch][:network][:publish_host] %>
+<% end %>
+
+transport:
+  tcp:
+    port:     9300-9400
+    compress: true
