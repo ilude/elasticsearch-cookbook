@@ -11,5 +11,4 @@ depends 'build-essential'
 depends 'sysstat'
 depends 'ruby_build'
 depends 'rvm'
-depends 'omnibus-rvm-hack' 
 depends "bluepill"
