@@ -80,6 +80,5 @@ template "/etc/bluepill/elasticsearch.pill" do
 end
 
 bluepill_service "elasticsearch" do
-  provider BluepillOverride.provider
   action [:load, :start]
 end
