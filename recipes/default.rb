@@ -1,19 +1,7 @@
 elasticsearch = "elasticsearch-#{node.elasticsearch[:version]}"
 
-include_recipe "apt"
-include_recipe "build-essential"
-include_recipe "ruby_build"
-include_recipe "sysstat"
-include_recipe "rvm::vagrant"
-include_recipe "rvm::system"
-include_recipe "rvm::user"
-include_recipe "rvm::gem_package"
 include_recipe "elasticsearch::curl"
 include_recipe "elasticsearch::java"
-
-node.set["bluepill"]["bin"] = "/usr/local/rvm/gems/ruby-#{node[:rvm][:default_ruby]}/bin/bluepill"
-
-include_recipe "bluepill"
 
 group node[:elasticsearch][:user] do
   action :create
@@ -89,20 +77,6 @@ end
 
 template "/etc/bluepill/elasticsearch.pill" do
   source "elasticsearch.pill.erb"
-end
-
-class BluepillOverride
-  def self.provider
-    Class.new(Chef::Provider::BluepillService) do
-      def shell_out!(*args)
-        args.each do |command|
-          rvm_shell "#{command}" do
-            code command
-          end
-        end
-      end
-    end
-  end
 end
 
 bluepill_service "elasticsearch" do
