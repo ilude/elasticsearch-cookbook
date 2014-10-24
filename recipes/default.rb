@@ -75,10 +75,7 @@ template "elasticsearch.yml" do
   mode 0755
 end
 
-template "/etc/bluepill/elasticsearch.pill" do
-  source "elasticsearch.pill.erb"
-end
-
-bluepill_service "elasticsearch" do
-  action [:load, :start]
+service 'elasticsearch' do
+  provider Chef::Provider::Service::Upstart
+  action [:enable, :start]
 end
