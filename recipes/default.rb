@@ -15,13 +15,6 @@ user node[:elasticsearch][:user] do
   shell   "/bin/false"
 end
 
-# FIX: Work around the fact that Chef creates the directory even for `manage_home: false`
-bash "remove the elasticsearch user home" do
-  user    'root'
-  code    "rm -rf  #{node[:elasticsearch][:dir]}/elasticsearch"
-  only_if "test -d #{node[:elasticsearch][:dir]}/elasticsearch"
-end
-
 remote_file "/tmp/elasticsearch-#{node[:elasticsearch][:version]}.tar.gz" do
   source    "http://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-#{node[:elasticsearch][:version]}.tar.gz"
   mode      "0644"
