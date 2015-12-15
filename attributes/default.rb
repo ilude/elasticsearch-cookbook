@@ -16,8 +16,8 @@ default[:elasticsearch][:http][:enabled]  = true
 default[:elasticsearch][:http][:port]     = 9200
 default[:elasticsearch][:http][:max_content_length] = "100mb"
 
-allocated_memory = "#{(node.memory.total.to_i * 0.6 ).floor / 1024}m"
-default.elasticsearch[:allocated_memory] = allocated_memory
+allocated_memory = "#{(node.memory.total.to_i * 0.4 ).floor / 1024}m"
+default[:elasticsearch][:allocated_memory] = allocated_memory
 default[:elasticsearch][:bootstrap][:mlockall] = true
 
 default[:elasticsearch][:index][:number_of_shards] = 5   # Development values
