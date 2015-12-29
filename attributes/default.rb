@@ -1,5 +1,5 @@
 
-default[:elasticsearch][:version]       = "1.1.1"
+default[:elasticsearch][:version]       = "2.1.1"
 
 default[:elasticsearch][:dir]         = "/opt"
 default[:elasticsearch][:install_dir] = "#{default[:elasticsearch][:dir]}/elasticsearch"
@@ -16,7 +16,7 @@ default[:elasticsearch][:http][:enabled]  = true
 default[:elasticsearch][:http][:port]     = 9200
 default[:elasticsearch][:http][:max_content_length] = "100mb"
 
-allocated_memory = "#{(node.memory.total.to_i * 0.4 ).floor / 1024}m"
+allocated_memory = "#{(node.memory.total.to_i / 1024 * 0.25 ).floor }m"
 default[:elasticsearch][:allocated_memory] = allocated_memory
 default[:elasticsearch][:bootstrap][:mlockall] = true
 
