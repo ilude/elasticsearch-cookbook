@@ -49,7 +49,7 @@ end
 bash "remove old elasticsearch dir" do
   user  "root"
   code  "rm -r /opt/elasticsearch"
-  if{ Dir.exists?("/opt/elasticsearch") }
+  only_if{ Dir.exists?("/opt/elasticsearch") }
 end
 
 bash "install elasticsearch" do
