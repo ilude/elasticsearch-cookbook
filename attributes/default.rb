@@ -1,10 +1,12 @@
 
 default[:elasticsearch][:version]       = "2.1.1"
 
-default[:elasticsearch][:dir]         = "/opt"
-default[:elasticsearch][:install_dir] = "#{default[:elasticsearch][:dir]}/elasticsearch"
-default[:elasticsearch][:data_dir]    = "#{default[:elasticsearch][:dir]}/elasticsearch/data"
-default[:elasticsearch][:config_dir]  = "#{default[:elasticsearch][:dir]}/elasticsearch/config"
+default[:elasticsearch][:dir]         = "/opt/elasticsearch"
+default[:elasticsearch][:working_dir] = "#{node[:elasticsearch][:dir]}-#{node[:elasticsearch][:version]}"
+default[:elasticsearch][:install_dir] = "#{node[:elasticsearch][:dir]}"
+default[:elasticsearch][:data_dir]    = "#{node[:elasticsearch][:dir]}/data"
+default[:elasticsearch][:config_dir]  = "#{node[:elasticsearch][:dir]}/config"
+
 default[:elasticsearch][:log_dir]     = "/var/log/elasticsearch"
 
 

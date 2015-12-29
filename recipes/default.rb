@@ -31,12 +31,30 @@ end
 bash "extract elasticsearch" do
   user  "root"
   cwd   "/tmp"
-  code  <<-EOH
-  tar -xf /tmp/elasticsearch-#{node[:elasticsearch][:version]}.tar
-  mv elasticsearch-#{node[:elasticsearch][:version]} elasticsearch
-  cp -r elasticsearch #{node[:elasticsearch][:dir]}
-  EOH
-  not_if{ File.exists?(File.join(node[:elasticsearch][:install_dir], "bin/elasticsearch")) }
+  code  "tar -xf /tmp/elasticsearch-#{node[:elasticsearch][:version]}.tar"
+end
+
+bash "copy elasticsearch" do
+  user  "root"
+  cwd   "/tmp"
+  code  "cp -r elasticsearch-#{node[:elasticsearch][:version]} #{node[:elasticsearch][:working_dir]}"
+  not_if{ Dir.exists?(node[:elasticsearch][:working_dir]) }
+end
+
+service 'elasticsearch' do
+  provider Chef::Provider::Service::Upstart
+  action [:enable, :stop]
+end
+
+bash "remove old elasticsearch dir" do
+  user  "root"
+  code  "rm -r /opt/elasticsearch"
+  if{ Dir.exists?("/opt/elasticsearch") }
+end
+
+bash "install elasticsearch" do
+  user  "root"
+  code  "ln -s #{node[:elasticsearch][:working_dir]} #{node[:elasticsearch][:install_dir]}"
 end
 
 template "elasticsearch.conf" do

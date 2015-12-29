@@ -14,8 +14,8 @@ env ES_HOME=<%= node[:elasticsearch][:install_dir] %>
 env ES_MIN_MEM=<%= node[:elasticsearch][:allocated_memory] %>
 env ES_MAX_MEM=<%= node[:elasticsearch][:allocated_memory] %>
 env DAEMON="<%= node[:elasticsearch][:install_dir] %>/bin/elasticsearch"
-env DATA_DIR="<%= node[:elasticsearch][:install_dir] %>/data"
-env CONFIG_DIR="<%= node[:elasticsearch][:install_dir] %>/config"
+env DATA_DIR="<%= node[:elasticsearch][:data_dir] %>"
+env CONFIG_DIR="<%= node[:elasticsearch][:config_dir] %>"
 env LOG_DIR="<%= node[:elasticsearch][:log_dir] %>"
  
 console output
