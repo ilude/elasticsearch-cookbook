@@ -1,5 +1,5 @@
 
-default[:elasticsearch][:version]       = "2.1.1"
+default[:elasticsearch][:version]       = "1.7.4"
 
 default[:elasticsearch][:dir]         = "/opt/elasticsearch"
 default[:elasticsearch][:working_dir] = "#{node[:elasticsearch][:dir]}-#{node[:elasticsearch][:version]}"
