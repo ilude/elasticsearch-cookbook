@@ -44,6 +44,7 @@ end
 service 'elasticsearch' do
   provider Chef::Provider::Service::Upstart
   action [:enable, :stop]
+  only_if { File.exists?('/etc/init/elasticsearch.conf') }
 end
 
 bash "remove old elasticsearch dir" do
