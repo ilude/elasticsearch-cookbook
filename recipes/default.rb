@@ -15,7 +15,7 @@ user node[:elasticsearch][:user] do
   shell   "/bin/false"
 end
 
-unless(::Dir.exists?("#{node[:elasticsearch][:working_dir]}/bin/elasticsearch"))
+unless(::File.exists?("#{node[:elasticsearch][:working_dir]}/bin/elasticsearch"))
 
   remote_file "/tmp/elasticsearch-#{node[:elasticsearch][:version]}.tar.gz" do
     source    "http://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-#{node[:elasticsearch][:version]}.tar.gz"
