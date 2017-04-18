@@ -1,4 +1,4 @@
-elasticsearch = "elasticsearch-#{node.elasticsearch[:version]}"
+elasticsearch = "elasticsearch-#{node[:elasticsearch][:version]}"
 
 include_recipe "elasticsearch::curl"
 include_recipe "elasticsearch::java"
