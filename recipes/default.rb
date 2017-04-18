@@ -11,7 +11,7 @@ end
 user node[:elasticsearch][:user] do
   comment "ElasticSearch User"
   system  true
-  gid     node.elasticsearch[:user]
+  gid     node[:elasticsearch][:user]
   shell   "/bin/false"
 end
 
